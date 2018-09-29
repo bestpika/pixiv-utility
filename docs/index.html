@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>pixiv</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  </head>
+
+  <body>
+    <form v-on:submit="formSubmit" class="container py-5">
+      <div class="form-row justify-content-center">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              <h5>pixiv</h5>
+            </div>
+            <div class="card-body">
+              <input type="text" id="input" required placeholder="id or username" v-model="id" v-on:keypress="keypress"
+                class="form-control" />
+            </div>
+            <div class="card-footer text-right">
+              <div class="btn-group" role="group">
+                <input type="reset" class="btn btn-outline-secondary">
+                <button type="submit" value="pid" v-on:click="btnClick" class="btn btn-outline-success">圖片</button>
+                <button type="submit" value="uid" v-on:click="btnClick" class="btn btn-outline-primary">繪師</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <script>
+      (() => {
+        new Vue({
+          el: 'form',
+          data: {
+            id: '',
+            btn: '',
+          },
+          methods: {
+            keypress(e) { // 阻止 Enter (暫不啟用)
+              if (e.key.match(/(.*)(enter)(.*)/ig)) {
+                // e.preventDefault()
+              }
+            },
+            btnClick(e) {
+              this.btn = e.target.value
+            },
+            formSubmit(e) {
+              e.preventDefault()
+              let uri = ''
+              let isNum = this.id.match(/\d+/ig)
+              switch (this.btn) {
+                case 'pid':
+                  if (isNum) {
+                    // uri = `https://pixiv.net/i/${this.id}`
+                    uri = `https://lihi.cc/di1X2/${this.id}`
+                  } else {
+                    alert('圖片只有數字')
+                    return
+                  }
+                  break;
+                case 'uid':
+                  if (isNum) {
+                    // uri = `https://pixiv.net/u/${this.id}`
+                    uri = `https://lihi.cc/iSAL2/${this.id}`
+                  } else {
+                    // uri = `https://pixiv.me/${this.id}`
+                    uri = `https://lihi.cc/OEVmA/${this.id}`
+                  }
+                  break;
+                default:
+                  uri = 'https://pixiv.me'
+                  break
+              }
+              console.info(uri)
+              location.href = uri
+            }
+          },
+          mounted() {
+            document.querySelector('#input').focus()
+          }
+        })
+      })()
+    </script>
+  </body>
+
+</html>
